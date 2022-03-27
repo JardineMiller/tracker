@@ -21,12 +21,12 @@ namespace Tracker.DAL.Configurations
 
             builder
                 .Property(x => x.Name)
-                .HasMaxLength(100)
+                .HasMaxLength(ValidationConstants.Task.MaxNameLength)
                 .IsRequired();
 
             builder
                 .Property(x => x.Description)
-                .HasMaxLength(250);
+                .HasMaxLength(ValidationConstants.Task.MaxDescriptionLength);
         }
     }
 }

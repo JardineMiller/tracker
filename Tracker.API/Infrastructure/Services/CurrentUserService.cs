@@ -6,6 +6,9 @@ namespace Tracker.API.Infrastructure.Services
 {
     public interface ICurrentUserService
     {
+        bool IsAuthenticated();
+        string GetUserName();
+        string GetId();
     }
 
     public class CurrentUserService : ICurrentUserService

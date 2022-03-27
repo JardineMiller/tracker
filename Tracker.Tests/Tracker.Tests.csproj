@@ -31,7 +31,6 @@
 
     <ItemGroup>
         <Folder Include="API\Features"/>
-        <Folder Include="API\Infrastructure"/>
     </ItemGroup>
 
 </Project>

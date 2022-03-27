@@ -8,7 +8,7 @@ using Tracker.API.Infrastructure.Exceptions;
 using Tracker.API.Infrastructure.Exceptions.Identity;
 using Xunit;
 
-namespace Tracker.Tests.API.Exceptions;
+namespace Tracker.Tests.API.Infrastructure.Exceptions;
 
 public class HttpResponseExceptionTests
 {
@@ -62,10 +62,12 @@ public class HttpResponseExceptionTests
     [Fact]
     public void ValidationException_Return_Correct_Response()
     {
-        var exception = new ValidationException(new List<ValidationFailure>());
+        var exception = new ValidationException(new List<ValidationFailure> { new("userId", "userId error message") });
+
         var response = exception.CreateResponse();
 
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
-        response.ResultMessage.ShouldBe(JsonConvert.SerializeObject(new Dictionary<string, string[]>()));
+        response.ResultMessage.ShouldBe(JsonConvert.SerializeObject(new Dictionary<string, string[]>
+            { { "userId", new[] { "userId error message" } } }));
     }
 }

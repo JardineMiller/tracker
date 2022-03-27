@@ -2,7 +2,7 @@ using FluentValidation.TestHelper;
 using Tracker.API.Features.Tasks.Queries;
 using Xunit;
 
-namespace Tracker.Tests.API.Tasks.Validators;
+namespace Tracker.Tests.API.Features.Tasks.Validators;
 
 public class GetUserTasksQueryValidatorTests
 {

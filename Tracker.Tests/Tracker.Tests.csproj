@@ -29,4 +29,9 @@
         <ProjectReference Include="..\Tracker.DAL\Tracker.DAL.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="API\Features"/>
+        <Folder Include="API\Infrastructure"/>
+    </ItemGroup>
+
 </Project>

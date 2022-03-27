@@ -9,7 +9,7 @@ using Tracker.DAL;
 using Tracker.Tests.Common;
 using Xunit;
 
-namespace Tracker.Tests.API.Tasks.Queries;
+namespace Tracker.Tests.API.Features.Tasks.Queries;
 
 public class GetUserTasksTests
 {

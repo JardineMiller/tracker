@@ -64,7 +64,11 @@ namespace Tracker.API.Features.Identity
             };
 
             this.Response.Cookies.Delete("refreshToken");
-            this.Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
+            this.Response.Cookies.Append(
+                "refreshToken",
+                refreshToken,
+                cookieOptions
+            );
         }
     }
 }

@@ -25,18 +25,19 @@ namespace Tracker.API.Features.Identity.Commands
             this._context = context;
         }
 
-        public async Task<bool> Handle(RevokeTokenCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(
+            RevokeTokenCommand request,
+            CancellationToken cancellationToken
+        )
         {
-            var user = this._context
-                .Users
-                .Include(u => u.RefreshTokens)
+            var user = this._context.Users.Include(u => u.RefreshTokens)
                 .FirstOrDefault(u => u.RefreshTokens.Any(t => t.Token == request.Token));
 
             // return false if no user found with token
-            if (user == null) throw new NotFoundException(nameof(User), $"with token {request.Token}");
+            if (user == null)
+                throw new NotFoundException(nameof(User), $"with token {request.Token}");
 
-            var refreshToken = user.RefreshTokens
-                .Single(x => x.Token == request.Token);
+            var refreshToken = user.RefreshTokens.Single(x => x.Token == request.Token);
 
             // return false if token is not active
             if (!refreshToken.IsActive)

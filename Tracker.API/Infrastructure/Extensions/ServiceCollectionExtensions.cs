@@ -22,53 +22,70 @@ namespace Tracker.API.Infrastructure.Extensions
     {
         public static IServiceCollection AddSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tracker.API", Version = "v1" });
-            });
+            services.AddSwaggerGen(
+                c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tracker.API", Version = "v1" });
+                }
+            );
 
             return services;
         }
 
-        public static IServiceCollection AddJwtAuth(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddJwtAuth(
+            this IServiceCollection services,
+            IConfiguration config
+        )
         {
             var appSettings = GetAppSettings(services, config);
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
-            services
-                .AddAuthentication(x =>
-                {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(x =>
-                {
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
+            services.AddAuthentication(
+                    x =>
                     {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
+                        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    }
+                )
+                .AddJwtBearer(
+                    x =>
+                    {
+                        x.RequireHttpsMetadata = false;
+                        x.SaveToken = true;
+                        x.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(key),
+                            ValidateIssuer = false,
+                            ValidateAudience = false
+                        };
+                    }
+                );
 
             return services;
         }
 
-        public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddDatabase(
+            this IServiceCollection services,
+            IConfiguration config
+        )
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                var connectionString = GetAppSettings(services, config).ConnectionString;
-                options.UseSqlServer(connectionString);
-            });
+            services.AddDbContext<ApplicationDbContext>(
+                options =>
+                {
+                    var connectionString = GetAppSettings(services, config)
+                        .ConnectionString;
+                    options.UseSqlServer(connectionString);
+                }
+            );
 
             return services;
         }
 
-        public static AppSettings GetAppSettings(this IServiceCollection services, IConfiguration config)
+        public static AppSettings GetAppSettings(
+            this IServiceCollection services,
+            IConfiguration config
+        )
         {
             var appSettingsConfig = config.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsConfig);
@@ -77,15 +94,17 @@ namespace Tracker.API.Infrastructure.Extensions
 
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
-            services
-                .AddIdentity<User, IdentityRole>(options =>
-                {
-                    options.Password.RequireDigit = false;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequiredLength = ValidationConstants.User.MinimumPasswordLength;
-                })
+            services.AddIdentity<User, IdentityRole>(
+                    options =>
+                    {
+                        options.Password.RequireDigit = false;
+                        options.Password.RequireLowercase = false;
+                        options.Password.RequireNonAlphanumeric = false;
+                        options.Password.RequireUppercase = false;
+                        options.Password.RequiredLength =
+                            ValidationConstants.User.MinimumPasswordLength;
+                    }
+                )
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             return services;
@@ -93,8 +112,7 @@ namespace Tracker.API.Infrastructure.Extensions
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services
-                .AddSingleton<IExceptionLogger, ExceptionLogger>()
+            services.AddSingleton<IExceptionLogger, ExceptionLogger>()
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehaviour<,>))
                 .AddScoped<TokenFactory>()
                 .AddScoped<ICurrentUserService, CurrentUserService>();
@@ -102,12 +120,17 @@ namespace Tracker.API.Infrastructure.Extensions
             return services;
         }
 
-        public static IServiceCollection AddControllersWithValidation(this IServiceCollection services)
+        public static IServiceCollection AddControllersWithValidation(
+            this IServiceCollection services
+        )
         {
-            services
-                .AddControllers()
+            services.AddControllers()
                 .AddFluentValidation(
-                    options => options.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+                    options =>
+                        options.RegisterValidatorsFromAssemblies(
+                            AppDomain.CurrentDomain.GetAssemblies()
+                        )
+                );
 
             return services;
         }

@@ -18,7 +18,8 @@ namespace Tracker.API.Features.Identity.Commands
         public string Token { get; set; }
     }
 
-    public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, LoginResponseModel>
+    public class RefreshTokenCommandHandler
+        : IRequestHandler<RefreshTokenCommand, LoginResponseModel>
     {
         private readonly ApplicationDbContext _context;
         private readonly TokenFactory _tokenFactory;
@@ -29,19 +30,21 @@ namespace Tracker.API.Features.Identity.Commands
             this._tokenFactory = tokenFactory;
         }
 
-        public async Task<LoginResponseModel> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
+        public async Task<LoginResponseModel> Handle(
+            RefreshTokenCommand request,
+            CancellationToken cancellationToken
+        )
         {
-            var user = this._context
-                .Users
-                .Include(u => u.RefreshTokens)
+            var user = this._context.Users.Include(u => u.RefreshTokens)
                 .FirstOrDefault(u => u.RefreshTokens.Any(t => t.Token == request.Token));
 
-            if (user == null) throw new NotFoundException(nameof(User), $"with token {request.Token}");
+            if (user == null)
+                throw new NotFoundException(nameof(User), $"with token {request.Token}");
 
-            var oldRefreshToken = user.RefreshTokens
-                .Single(x => x.Token == request.Token);
+            var oldRefreshToken = user.RefreshTokens.Single(x => x.Token == request.Token);
 
-            if (!oldRefreshToken.IsActive) throw new ExpiredTokenException("Unable to refresh token as it is expired");
+            if (!oldRefreshToken.IsActive)
+                throw new ExpiredTokenException("Unable to refresh token as it is expired");
 
             // replace old refresh token with a new one and save
             var newRefreshToken = this._tokenFactory.GenerateRefreshToken();

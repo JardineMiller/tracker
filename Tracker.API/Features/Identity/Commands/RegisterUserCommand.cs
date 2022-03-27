@@ -25,7 +25,10 @@ namespace Tracker.API.Features.Identity.Commands
             this._userManager = userManager;
         }
 
-        public async Task<Unit> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(
+            RegisterUserCommand request,
+            CancellationToken cancellationToken
+        )
         {
             var user = new User
             {

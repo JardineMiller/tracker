@@ -28,18 +28,23 @@ namespace Tracker.API.Features.Identity.Commands
         private readonly TokenFactory _tokenFactory;
         private readonly UserManager<User> _userManager;
 
-        public LoginCommandHandler(UserManager<User> userManager, TokenFactory tokenFactory,
-            ApplicationDbContext context)
+        public LoginCommandHandler(
+            UserManager<User> userManager,
+            TokenFactory tokenFactory,
+            ApplicationDbContext context
+        )
         {
             this._userManager = userManager;
             this._tokenFactory = tokenFactory;
             this._context = context;
         }
 
-        public async Task<LoginResponseModel> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<LoginResponseModel> Handle(
+            LoginCommand request,
+            CancellationToken cancellationToken
+        )
         {
-            var user = await this._userManager.Users
-                .Include(x => x.RefreshTokens)
+            var user = await this._userManager.Users.Include(x => x.RefreshTokens)
                 .FirstOrDefaultAsync(x => x.UserName == request.Username, cancellationToken);
 
             await ValidateUserInfo(request, user);
@@ -81,7 +86,8 @@ namespace Tracker.API.Features.Identity.Commands
 
             var passwordValid = await this._userManager.CheckPasswordAsync(user, request.Password);
 
-            if (!passwordValid) throw new IncorrectPasswordException("The provided password was incorrect.");
+            if (!passwordValid)
+                throw new IncorrectPasswordException("The provided password was incorrect.");
         }
     }
 

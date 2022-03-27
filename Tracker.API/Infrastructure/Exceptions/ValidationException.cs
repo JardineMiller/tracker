@@ -18,14 +18,12 @@ namespace Tracker.API.Infrastructure.Exceptions
 
         public ValidationException(List<ValidationFailure> failures) : this()
         {
-            var propertyNames = failures
-                .Select(e => e.PropertyName)
+            var propertyNames = failures.Select(e => e.PropertyName)
                 .Distinct();
 
             foreach (var propertyName in propertyNames)
             {
-                var propertyFailures = failures
-                    .Where(e => e.PropertyName == propertyName)
+                var propertyFailures = failures.Where(e => e.PropertyName == propertyName)
                     .Select(e => e.ErrorMessage)
                     .ToArray();
 

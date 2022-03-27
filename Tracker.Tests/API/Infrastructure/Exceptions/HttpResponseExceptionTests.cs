@@ -62,12 +62,17 @@ public class HttpResponseExceptionTests
     [Fact]
     public void ValidationException_Return_Correct_Response()
     {
-        var exception = new ValidationException(new List<ValidationFailure> { new("userId", "userId error message") });
+        var exception = new ValidationException(
+            new List<ValidationFailure> { new("userId", "userId error message") }
+        );
 
         var response = exception.CreateResponse();
 
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
-        response.ResultMessage.ShouldBe(JsonConvert.SerializeObject(new Dictionary<string, string[]>
-            { { "userId", new[] { "userId error message" } } }));
+        response.ResultMessage.ShouldBe(
+            JsonConvert.SerializeObject(
+                new Dictionary<string, string[]> { { "userId", new[] { "userId error message" } } }
+            )
+        );
     }
 }

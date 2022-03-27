@@ -11,18 +11,17 @@ namespace Tracker.API
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddJwtAuth(this.Configuration)
+            services.AddJwtAuth(this.Configuration)
                 .AddDatabase(this.Configuration)
                 .AddMediatR(Assembly.GetExecutingAssembly())
                 .AddIdentity()
@@ -36,14 +35,18 @@ namespace Tracker.API
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-            app
-                .UseCustomExceptionHandler()
+            app.UseCustomExceptionHandler()
                 .UseSwaggerUi()
                 .UseHttpsRedirection()
                 .UseRouting()
                 .UseAuthentication()
                 .UseAuthorization()
-                .UseEndpoints(endpoints => { endpoints.MapControllers(); })
+                .UseEndpoints(
+                    endpoints =>
+                    {
+                        endpoints.MapControllers();
+                    }
+                )
                 .ApplyMigrations();
         }
     }

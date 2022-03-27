@@ -21,12 +21,15 @@ namespace Tracker.API.Infrastructure.Exceptions
                 //     break;
 
                 case NotFoundException notFoundException:
-                    this._logger.LogWarning($"[{nameof(NotFoundException)}] occurred: [{notFoundException.Message}]");
+                    this._logger.LogWarning(
+                        $"[{nameof(NotFoundException)}] occurred: [{notFoundException.Message}]"
+                    );
                     break;
 
                 case ValidationException validationException:
                     this._logger.LogWarning(
-                        $"[{nameof(ValidationException)}] occurred: [{JsonConvert.SerializeObject(validationException.Failures)}]");
+                        $"[{nameof(ValidationException)}] occurred: [{JsonConvert.SerializeObject(validationException.Failures)}]"
+                    );
                     break;
             }
         }

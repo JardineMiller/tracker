@@ -14,14 +14,22 @@ public class CurrentUserServiceTests
     public CurrentUserServiceTests()
     {
         var mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
-        var context = new DefaultHttpContext();
-        context.User = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+        var context = new DefaultHttpContext
         {
-            new(ClaimTypes.Name, "Mock User"),
-            new(ClaimTypes.NameIdentifier, "0001")
-        }, "mock"));
+            User = new ClaimsPrincipal(
+                new ClaimsIdentity(
+                    new Claim[]
+                    {
+                        new(ClaimTypes.Name, "Mock User"),
+                        new(ClaimTypes.NameIdentifier, "0001")
+                    },
+                    "mock"
+                )
+            )
+        };
 
-        mockHttpContextAccessor.Setup(contextAccessor => contextAccessor.HttpContext).Returns(context);
+        mockHttpContextAccessor.Setup(contextAccessor => contextAccessor.HttpContext)
+            .Returns(context);
 
         this._currentUserService = new CurrentUserService(mockHttpContextAccessor.Object);
     }
@@ -63,7 +71,8 @@ public class CurrentUserServiceTests
         var mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
         var context = new DefaultHttpContext();
 
-        mockHttpContextAccessor.Setup(contextAccessor => contextAccessor.HttpContext).Returns(context);
+        mockHttpContextAccessor.Setup(contextAccessor => contextAccessor.HttpContext)
+            .Returns(context);
 
         var currentUserService = new CurrentUserService(mockHttpContextAccessor.Object);
 

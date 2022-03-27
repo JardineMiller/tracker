@@ -20,19 +20,23 @@ public class GetUserTasksTests
         var fixture = new QueryTestBase();
         this._context = fixture.Context;
 
-        this._context.Tasks.Add(new DAL.Models.Entities.Task
-        {
-            Name = "Task 1",
-            Description = null,
-            AssigneeId = "0001"
-        });
+        this._context.Tasks.Add(
+            new DAL.Models.Entities.Task
+            {
+                Name = "Task 1",
+                Description = null,
+                AssigneeId = "0001"
+            }
+        );
 
-        this._context.Tasks.Add(new DAL.Models.Entities.Task
-        {
-            Name = "Task 2",
-            Description = null,
-            AssigneeId = "0001"
-        });
+        this._context.Tasks.Add(
+            new DAL.Models.Entities.Task
+            {
+                Name = "Task 2",
+                Description = null,
+                AssigneeId = "0001"
+            }
+        );
 
         this._context.SaveChanges();
     }
@@ -46,7 +50,10 @@ public class GetUserTasksTests
         var nonExistingUserId = "INVALID";
 
         // Act
-        var result = await sut.Handle(new GetUserTasksQuery { UserId = nonExistingUserId }, CancellationToken.None);
+        var result = await sut.Handle(
+            new GetUserTasksQuery { UserId = nonExistingUserId },
+            CancellationToken.None
+        );
 
         // Assert
         result.ShouldBeEmpty();
@@ -61,16 +68,23 @@ public class GetUserTasksTests
         var existingUserId = "0001";
 
         // Act
-        var result = (await sut.Handle(new GetUserTasksQuery { UserId = existingUserId }, CancellationToken.None))
-            .ToList();
+        var result = (await sut.Handle(
+            new GetUserTasksQuery { UserId = existingUserId },
+            CancellationToken.None
+        )).ToList();
 
         // Assert
         result.ShouldBeOfType<List<TaskResponseModel>>();
-        result.Count().ShouldBe(2);
+        result.Count()
+            .ShouldBe(2);
 
-        result.Count(x => x.Name == "Task 1").ShouldBe(1);
-        result.Count(x => x.Name == "Task 2").ShouldBe(1);
-        result.Count(x => x.Description == null).ShouldBe(2);
-        result.Count(x => x.AssigneeId == "0001").ShouldBe(2);
+        result.Count(x => x.Name == "Task 1")
+            .ShouldBe(1);
+        result.Count(x => x.Name == "Task 2")
+            .ShouldBe(1);
+        result.Count(x => x.Description == null)
+            .ShouldBe(2);
+        result.Count(x => x.AssigneeId == "0001")
+            .ShouldBe(2);
     }
 }

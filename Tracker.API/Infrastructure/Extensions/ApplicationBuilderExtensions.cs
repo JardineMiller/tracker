@@ -17,18 +17,21 @@ namespace Tracker.API.Infrastructure.Extensions
 
         public static IApplicationBuilder UseSwaggerUi(this IApplicationBuilder app)
         {
-            app
-                .UseSwagger()
-                .UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API");
-                    options.RoutePrefix = "docs/index";
-                });
+            app.UseSwagger()
+                .UseSwaggerUI(
+                    options =>
+                    {
+                        options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API");
+                        options.RoutePrefix = "docs/index";
+                    }
+                );
 
             return app;
         }
 
-        public static IApplicationBuilder UseCustomExceptionHandler(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseCustomExceptionHandler(
+            this IApplicationBuilder builder
+        )
         {
             return builder.UseMiddleware<CustomExceptionHandlerMiddleware>();
         }

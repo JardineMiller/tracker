@@ -26,7 +26,8 @@ public class ExceptionLoggerTests
         loggerMock.VerifyLogging(
             $"[{nameof(NotFoundException)}] occurred: [{exception.Message}]",
             LogLevel.Warning,
-            Times.Once());
+            Times.Once()
+        );
     }
 
     [Fact]
@@ -49,6 +50,7 @@ public class ExceptionLoggerTests
         loggerMock.VerifyLogging(
             $"[{nameof(ValidationException)}] occurred: [{JsonConvert.SerializeObject(exception.Failures)}]",
             LogLevel.Warning,
-            Times.Once());
+            Times.Once()
+        );
     }
 }

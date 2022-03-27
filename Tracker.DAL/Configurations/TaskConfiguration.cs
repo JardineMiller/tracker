@@ -8,24 +8,19 @@ namespace Tracker.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<Task> builder)
         {
-            builder
-                .HasKey(x => x.Id);
+            builder.HasKey(x => x.Id);
 
-            builder
-                .HasQueryFilter(x => !x.IsDeleted);
+            builder.HasQueryFilter(x => !x.IsDeleted);
 
-            builder
-                .HasOne(x => x.Assignee)
+            builder.HasOne(x => x.Assignee)
                 .WithMany(u => u.Tasks)
                 .HasForeignKey(x => x.AssigneeId);
 
-            builder
-                .Property(x => x.Name)
+            builder.Property(x => x.Name)
                 .HasMaxLength(ValidationConstants.Task.MaxNameLength)
                 .IsRequired();
 
-            builder
-                .Property(x => x.Description)
+            builder.Property(x => x.Description)
                 .HasMaxLength(ValidationConstants.Task.MaxDescriptionLength);
         }
     }

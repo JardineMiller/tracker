@@ -15,7 +15,8 @@ namespace Tracker.API.Features.Tasks.Queries
         public string UserId { get; set; }
     }
 
-    public class GetUserTasksQueryHandler : IRequestHandler<GetUserTasksQuery, IEnumerable<TaskResponseModel>>
+    public class GetUserTasksQueryHandler
+        : IRequestHandler<GetUserTasksQuery, IEnumerable<TaskResponseModel>>
     {
         private readonly ApplicationDbContext _context;
 
@@ -24,12 +25,12 @@ namespace Tracker.API.Features.Tasks.Queries
             this._context = context;
         }
 
-        public async Task<IEnumerable<TaskResponseModel>> Handle(GetUserTasksQuery request,
-            CancellationToken cancellationToken)
+        public async Task<IEnumerable<TaskResponseModel>> Handle(
+            GetUserTasksQuery request,
+            CancellationToken cancellationToken
+        )
         {
-            return await this._context
-                .Tasks
-                .Where(x => x.AssigneeId == request.UserId)
+            return await this._context.Tasks.Where(x => x.AssigneeId == request.UserId)
                 .Select(x => new TaskResponseModel(x))
                 .ToListAsync(cancellationToken);
         }

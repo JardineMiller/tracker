@@ -9,7 +9,9 @@ namespace Tracker.API.Infrastructure.Exceptions
         {
         }
 
-        public NotFoundException(string name, string id) : base($"Could not find {name} with Id {id}")
+        public NotFoundException(string name, string id) : base(
+            $"Could not find {name} with Id {id}"
+        )
         {
         }
 

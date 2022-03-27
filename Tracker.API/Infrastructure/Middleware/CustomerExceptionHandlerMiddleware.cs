@@ -28,7 +28,10 @@ namespace Tracker.API.Infrastructure.Middleware
             }
         }
 
-        private Task HandleExceptionAsync(HttpContext context, HandledHttpResponseException exception)
+        private Task HandleExceptionAsync(
+            HttpContext context,
+            HandledHttpResponseException exception
+        )
         {
             var response = exception.CreateResponse();
             this._logger.LogException(exception);

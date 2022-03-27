@@ -11,12 +11,12 @@ namespace Tracker.DAL
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
-
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
-        public DbSet<Task> Tasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -33,8 +33,10 @@ namespace Tracker.DAL
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
-            CancellationToken cancellationToken = new())
+        public override Task<int> SaveChangesAsync(
+            bool acceptAllChangesOnSuccess,
+            CancellationToken cancellationToken = new()
+        )
         {
             ApplyAuditInformation();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);

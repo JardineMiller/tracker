@@ -7,9 +7,8 @@ namespace Tracker.API.Infrastructure.Extensions
     {
         public static string GetUsername(this ClaimsPrincipal user)
         {
-            return user
-                .Claims
-                .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            return user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)
+                ?.Value;
         }
     }
 }

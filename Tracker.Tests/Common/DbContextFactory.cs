@@ -9,8 +9,10 @@ public static class DbContextFactory
 {
     public static ApplicationDbContext Create()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(
+                Guid.NewGuid()
+                    .ToString()
+            )
             .Options;
 
         var user1 = new User { Id = "0001", UserName = "User 1" };

@@ -32,6 +32,16 @@ namespace Tracker.API.Infrastructure.Extensions
             return services;
         }
 
+        private static AppSettings GetAppSettings(
+            this IServiceCollection services,
+            IConfiguration config
+        )
+        {
+            var appSettingsConfig = config.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsConfig);
+            return appSettingsConfig.Get<AppSettings>();
+        }
+
         public static IServiceCollection AddJwtAuth(
             this IServiceCollection services,
             IConfiguration config
@@ -82,19 +92,9 @@ namespace Tracker.API.Infrastructure.Extensions
             return services;
         }
 
-        public static AppSettings GetAppSettings(
-            this IServiceCollection services,
-            IConfiguration config
-        )
-        {
-            var appSettingsConfig = config.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsConfig);
-            return appSettingsConfig.Get<AppSettings>();
-        }
-
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
-            services.AddIdentity<User, IdentityRole>(
+            services.AddIdentityCore<User>(
                     options =>
                     {
                         options.Password.RequireDigit = false;
@@ -105,6 +105,7 @@ namespace Tracker.API.Infrastructure.Extensions
                             ValidationConstants.User.MinimumPasswordLength;
                     }
                 )
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             return services;

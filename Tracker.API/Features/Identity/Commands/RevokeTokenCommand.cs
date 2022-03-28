@@ -35,13 +35,17 @@ namespace Tracker.API.Features.Identity.Commands
 
             // return false if no user found with token
             if (user == null)
+            {
                 throw new NotFoundException(nameof(User), $"with token {request.Token}");
+            }
 
             var refreshToken = user.RefreshTokens.Single(x => x.Token == request.Token);
 
             // return false if token is not active
             if (!refreshToken.IsActive)
+            {
                 throw new ExpiredTokenException("Unable to revoke token as it is already expired");
+            }
 
             // revoke token and save
             refreshToken.RevokedOn = DateTime.UtcNow;

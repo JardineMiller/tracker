@@ -82,12 +82,17 @@ namespace Tracker.API.Features.Identity.Commands
 
         private async Task ValidateUserInfo(LoginCommand request, User user)
         {
-            if (user == null) throw new NotFoundException(nameof(User), request.Username);
+            if (user == null)
+            {
+                throw new NotFoundException(nameof(User), request.Username);
+            }
 
             var passwordValid = await this._userManager.CheckPasswordAsync(user, request.Password);
 
             if (!passwordValid)
+            {
                 throw new IncorrectPasswordException("The provided password was incorrect.");
+            }
         }
     }
 

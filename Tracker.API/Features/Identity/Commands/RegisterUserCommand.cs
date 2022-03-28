@@ -38,7 +38,10 @@ namespace Tracker.API.Features.Identity.Commands
 
             var result = await this._userManager.CreateAsync(user, request.Password);
 
-            if (!result.Succeeded) throw new UserRegisterException(result.Errors);
+            if (!result.Succeeded)
+            {
+                throw new UserRegisterException(result.Errors);
+            }
 
             return Unit.Value;
         }

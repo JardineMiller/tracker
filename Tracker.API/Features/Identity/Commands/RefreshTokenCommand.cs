@@ -39,12 +39,16 @@ namespace Tracker.API.Features.Identity.Commands
                 .FirstOrDefault(u => u.RefreshTokens.Any(t => t.Token == request.Token));
 
             if (user == null)
+            {
                 throw new NotFoundException(nameof(User), $"with token {request.Token}");
+            }
 
             var oldRefreshToken = user.RefreshTokens.Single(x => x.Token == request.Token);
 
             if (!oldRefreshToken.IsActive)
+            {
                 throw new ExpiredTokenException("Unable to refresh token as it is expired");
+            }
 
             // replace old refresh token with a new one and save
             var newRefreshToken = this._tokenFactory.GenerateRefreshToken();

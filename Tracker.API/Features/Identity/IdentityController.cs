@@ -32,7 +32,10 @@ namespace Tracker.API.Features.Identity
         {
             var refreshToken = this.Request.Cookies["refreshToken"];
 
-            if (refreshToken == null) return null;
+            if (refreshToken == null)
+            {
+                return null;
+            }
 
             var cmd = new RefreshTokenCommand { Token = refreshToken };
             var response = await this.Mediator.Send(cmd);

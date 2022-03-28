@@ -10,7 +10,7 @@ using Tracker.DAL;
 namespace Tracker.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220326104506_AddTask")]
+    [Migration("20220328093037_AddTask")]
     partial class AddTask
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -196,9 +196,6 @@ namespace Tracker.DAL.Migrations
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("DeletedOn")
                         .HasColumnType("datetimeoffset");

@@ -21,4 +21,8 @@
         <ProjectReference Include="..\Tracker.DAL\Tracker.DAL.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <None Include=".csharpierrc.json"/>
+    </ItemGroup>
+
 </Project>

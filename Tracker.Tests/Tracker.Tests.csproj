@@ -35,4 +35,8 @@
         <Folder Include="API\Features"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <None Include=".csharpierrc.json"/>
+    </ItemGroup>
+
 </Project>

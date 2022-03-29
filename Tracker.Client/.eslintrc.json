@@ -1,0 +1,278 @@
+{
+    "root": true,
+    "plugins": [
+        "sort-imports-es6-autofix"
+    ],
+    "overrides": [
+        /*
+        Four main libraries containing rules:
+            ESLint: https://eslint.org/docs/rules/
+            ESLint Angular: https://github.com/angular-eslint/angular-eslint/tree/master/packages/eslint-plugin/src/rules
+            TS ESLint: https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin/docs/rules
+            Angular Templates: https://github.com/angular-eslint/angular-eslint/tree/master/packages/eslint-plugin-template/src/rules
+          */
+        {
+            "files": [
+                "*.ts"
+            ],
+            "parserOptions": {
+                "project": [
+                    "tsconfig.json"
+                ],
+                "createDefaultProgram": true
+            },
+            "extends": [
+                "plugin:@angular-eslint/recommended",
+                "plugin:@angular-eslint/ng-cli-compat",
+                "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+                "plugin:@angular-eslint/template/process-inline-templates",
+                "prettier"
+            ],
+            "rules": {
+                // ESLint
+                "arrow-spacing": [
+                    "error",
+                    {
+                        "before": true,
+                        "after": true
+                    }
+                ],
+                "brace-style": [
+                    "error",
+                    "stroustrup",
+                    {
+                        "allowSingleLine": true
+                    }
+                ],
+                "complexity": [
+                    "error",
+                    {
+                        "max": 15
+                    }
+                ],
+                "eqeqeq": [
+                    "error",
+                    "always"
+                ],
+                // could back off always to smart if we need to
+                "indent": [
+                    "error",
+                    4,
+                    {
+                        "SwitchCase": 4,
+                        "ignoreComments": false
+                    }
+                ],
+                "max-classes-per-file": [
+                    "error",
+                    1
+                ],
+                "max-depth": [
+                    "error",
+                    {
+                        "max": 5
+                    }
+                ],
+                "max-len": "off",
+                "multiline-comment-style": [
+                    "error",
+                    "bare-block"
+                ],
+                "no-bitwise": "off",
+                "no-alert": "error",
+                "no-console": [
+                    "error",
+                    {
+                        "allow": [
+                            ""
+                        ]
+                    }
+                ],
+                // https://github.com/eslint/eslint/issues/14008#issuecomment-781099293
+                "no-debugger": "error",
+                "no-fallthrough": "error",
+                "no-proto": "error",
+                "no-sequences": "error",
+                "no-trailing-spaces": "error",
+                "no-undefined": "error",
+                "no-undef-init": "error",
+                "no-underscore-dangle": "off",
+                "no-useless-concat": "error",
+                "object-curly-spacing": [
+                    "error",
+                    "always"
+                ],
+                "object-shorthand": "off",
+                "prefer-arrow/prefer-arrow-functions": "off",
+                "prefer-template": 2,
+                "quotes": [
+                    "error",
+                    "double",
+                    {
+                        "avoidEscape": true
+                    }
+                ],
+                "semi": [
+                    "error",
+                    "always",
+                    {
+                        "omitLastInOneLineBlock": false
+                    }
+                ],
+                "sort-vars": "error",
+                "sort-imports-es6-autofix/sort-imports-es6": [
+                    1,
+                    {
+                        "ignoreCase": false,
+                        "ignoreMemberSort": false,
+                        "memberSyntaxSortOrder": [
+                            "multiple",
+                            "none",
+                            "all",
+                            "single"
+                        ]
+                    }
+                ],
+                "spaced-comment": [
+                    "error",
+                    "always",
+                    {
+                        "block": {
+                            "balanced": true
+                        }
+                    }
+                ],
+                // ESLint Angular
+                "@angular-eslint/component-class-suffix": [
+                    "error",
+                    {
+                        "suffixes": [
+                            "Component"
+                        ]
+                    }
+                ],
+                "@angular-eslint/component-max-inline-declarations": "error",
+                "@angular-eslint/component-selector": [
+                    "error",
+                    {
+                        "type": "element",
+                        "prefix": [
+                            "ctx"
+                        ],
+                        "style": "kebab-case"
+                    }
+                ],
+                "@angular-eslint/directive-class-suffix": [
+                    "error",
+                    {
+                        "suffixes": [
+                            "Directive"
+                        ]
+                    }
+                ],
+                "@angular-eslint/directive-selector": [
+                    "error",
+                    {
+                        "type": "attribute",
+                        "prefix": [
+                            "ctx"
+                        ],
+                        "style": "camelCase"
+                    }
+                ],
+                "@angular-eslint/no-any": "off",
+                "@angular-eslint/no-output-on-prefix": "off",
+                "@angular-eslint/no-queries-metadata-property": "error",
+                "@angular-eslint/pipe-prefix": [
+                    "error",
+                    {
+                        "prefixes": [
+                            "ctx"
+                        ]
+                    }
+                ],
+                "@angular-eslint/prefer-output-readonly": "error",
+                // TS ESLint
+                "@typescript-eslint/array-type": [
+                    "error",
+                    {
+                        "default": "generic",
+                        "readonly": "generic"
+                    }
+                ],
+                "@typescript-eslint/ban-types": "off",
+                "@typescript-eslint/explicit-member-accessibility": [
+                    "error",
+                    {
+                        "accessibility": "no-public"
+                    }
+                ],
+                "@typescript-eslint/indent": "off",
+                // handled by ESLint rule section
+                "@typescript-eslint/member-ordering": "error",
+                "@typescript-eslint/naming-convention": [
+                    "error",
+                    {
+                        "selector": "property",
+                        "modifiers": [
+                            "private"
+                        ],
+                        "format": [
+                            "camelCase"
+                        ],
+                        "leadingUnderscore": "require"
+                    }
+                ],
+                "@typescript-eslint/no-empty-interface": "off",
+                "@typescript-eslint/no-explicit-any": "error",
+                "@typescript-eslint/no-inferrable-types": "off",
+                "@typescript-eslint/no-namespace": "off",
+                "@typescript-eslint/no-unnecessary-boolean-literal-compare": [
+                    "error",
+                    {
+                        "allowComparingNullableBooleansToTrue": false,
+                        "allowComparingNullableBooleansToFalse": false
+                    }
+                ],
+                "@typescript-eslint/no-unsafe-member-access": "error",
+                "@typescript-eslint/prefer-for-of": "off",
+                "@typescript-eslint/prefer-includes": "error"
+            }
+        },
+        {
+            "files": [
+                "*.html"
+            ],
+            "parser": "@angular-eslint/template-parser",
+            "extends": [
+                "plugin:@angular-eslint/template/recommended"
+            ],
+            "rules": {
+                // Angular Templates
+                "@angular-eslint/template/conditional-complexity": [
+                    "error",
+                    {
+                        /*
+                        Keep very low to prevent BL creeping into templates
+                        and to maximise testability of logic.
+                      */
+                        "maxComplexity": 1
+                    }
+                ],
+                "@angular-eslint/template/cyclomatic-complexity": [
+                    "error",
+                    {
+                        "maxComplexity": 10
+                    }
+                ],
+                "@angular-eslint/template/no-duplicate-attributes": [
+                    "error",
+                    {
+                        "allowTwoWayDataBinding": true
+                    }
+                ],
+                "@angular-eslint/template/use-track-by-function": "error"
+            }
+        }
+    ]
+}

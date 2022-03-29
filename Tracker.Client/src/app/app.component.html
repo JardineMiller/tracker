@@ -1,0 +1,13 @@
+<p-card [style]="{width: '360px'}" header="Advanced Card" styleClass="p-card-shadow" subheader="Card Subheader">
+    <ng-template pTemplate="header">
+    </ng-template>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam
+        deserunt
+        quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
+        quas!</p>
+    <ng-template pTemplate="footer">
+        <p-button (click)="themeService.switchTheme('lara-light')" icon="pi pi-check" label="Light"></p-button>
+        <p-button (click)="themeService.switchTheme('lara-dark')" [style]="{'margin-left': '.5em'}" icon="pi pi-times"
+                  label="Dark" styleClass="p-button-secondary"></p-button>
+    </ng-template>
+</p-card>

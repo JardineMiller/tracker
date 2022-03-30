@@ -4,7 +4,7 @@
 	semi: true,
 	singleQuote: false,
 	printWidth: 80,
-	useTabs: true,
+	useTabs: false,
 	singleAttributePerLine: true,
 	overrides: [
 		{

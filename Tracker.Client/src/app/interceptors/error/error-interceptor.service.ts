@@ -6,7 +6,7 @@ import {
     HttpRequest
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, map, Observable, throwError } from "rxjs";
+import { Observable, catchError, map, throwError } from "rxjs";
 
 @Injectable({
     providedIn: "root"

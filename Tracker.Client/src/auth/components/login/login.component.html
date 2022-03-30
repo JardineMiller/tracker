@@ -1,0 +1,79 @@
+﻿<div class="flex min-h-full min-w-full justify-content-center align-items-center">
+    <form
+        class="flex flex-column"
+        [formGroup]="loginForm"
+        (ngSubmit)="login()"
+    >
+        <h3>Login</h3>
+
+        <div class="field col-12">
+            <span class="p-float-label">
+                <input
+                    pInputText
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    formControlName="username"
+                />
+                <label for="username">
+                    Username
+                    <span class="p-error">*</span>
+                </label>
+            </span>
+            <small
+                *ngIf="username?.touched && username?.errors?.required"
+                class="p-error block"
+            >
+                Username is required
+            </small>
+            <small
+                *ngIf="invalidUsername"
+                class="p-error block"
+            >
+                Username "{{ username?.value }}" not found
+            </small>
+        </div>
+
+        <div class="field col-12">
+            <span class="p-float-label">
+                <input
+                    pPassword
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    formControlName="password"
+                />
+                <label for="password">
+                    Password
+                    <span class="p-error">*</span>
+                </label>
+            </span>
+
+            <small
+                *ngIf="password.touched && password.errors?.required"
+                class="p-error block"
+            >
+                Password is required
+            </small>
+            <small
+                *ngIf="incorrectPassword"
+                class="p-error blockr"
+            >
+                Password incorrect
+            </small>
+        </div>
+
+        <button
+            pButton
+            type="submit"
+            [disabled]="!loginForm.valid"
+            label="Login"
+        ></button>
+        <a
+            class="m-2 font-size-12"
+            routerLink="/register"
+        >
+            Need an acccount?
+        </a>
+    </form>
+</div>

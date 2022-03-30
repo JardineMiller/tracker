@@ -1,13 +1,13 @@
 import { Component } from "@angular/core";
-import { ThemeService } from "./services/theme.service";
+import { ThemeService } from "./services/theme/theme.service";
 
 @Component({
-	selector: "app-root",
-	templateUrl: "./app.component.html",
-	styleUrls: ["./app.component.scss"]
+    selector: "trk-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-	title = "tracker";
+    title = "tracker";
 
-	constructor(readonly themeService: ThemeService) {}
+    constructor(readonly themeService: ThemeService) {}
 }

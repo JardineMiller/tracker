@@ -22,7 +22,8 @@ namespace Tracker.API.Features.Identity.Commands
         public string Password { get; set; }
     }
 
-    public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponseModel>
+    public class LoginCommandHandler
+        : IRequestHandler<LoginCommand, LoginResponseModel>
     {
         private readonly ApplicationDbContext _context;
         private readonly TokenFactory _tokenFactory;
@@ -44,12 +45,19 @@ namespace Tracker.API.Features.Identity.Commands
             CancellationToken cancellationToken
         )
         {
-            var user = await this._userManager.Users.Include(x => x.RefreshTokens)
-                .FirstOrDefaultAsync(x => x.UserName == request.Username, cancellationToken);
+            var user = await this._userManager.Users
+                .Include(x => x.RefreshTokens)
+                .FirstOrDefaultAsync(
+                    x => x.UserName == request.Username,
+                    cancellationToken
+                );
 
             await ValidateUserInfo(request, user);
 
-            var jwt = this._tokenFactory.GenerateJwtToken(user.Id, user.UserName);
+            var jwt = this._tokenFactory.GenerateJwtToken(
+                user.Id,
+                user.UserName
+            );
             var refreshToken = this._tokenFactory.GenerateRefreshToken();
 
             if (user.RefreshTokens.Any())
@@ -87,11 +95,16 @@ namespace Tracker.API.Features.Identity.Commands
                 throw new NotFoundException(nameof(User), request.Username);
             }
 
-            var passwordValid = await this._userManager.CheckPasswordAsync(user, request.Password);
+            var passwordValid = await this._userManager.CheckPasswordAsync(
+                user,
+                request.Password
+            );
 
             if (!passwordValid)
             {
-                throw new IncorrectPasswordException("The provided password was incorrect.");
+                throw new IncorrectPasswordException(
+                    "The provided password was incorrect."
+                );
             }
         }
     }
@@ -100,13 +113,9 @@ namespace Tracker.API.Features.Identity.Commands
     {
         public LoginCommandValidator()
         {
-            RuleFor(l => l.Username)
-                .NotEmpty()
-                .NotNull();
+            RuleFor(l => l.Username).NotEmpty().NotNull();
 
-            RuleFor(l => l.Password)
-                .NotNull()
-                .NotEmpty();
+            RuleFor(l => l.Password).NotNull().NotEmpty();
         }
     }
 }
